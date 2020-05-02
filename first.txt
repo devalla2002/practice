@@ -3,4 +3,6 @@ hi iam Git
 hi i am current user
 hi iam another user
 i am new commit after creating Branches
-hi iam from Branch B
+
+hi iam from master
+
