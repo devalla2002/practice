@@ -1,1 +1,2 @@
 hi iam third file
+iam new  commit called 3rd
