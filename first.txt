@@ -1,1 +1,2 @@
 hi iam Git
+hi i am current user
