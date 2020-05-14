@@ -15,8 +15,10 @@ stage('CodeQuality'){
 
 }
 stage('artifactory'){
-sh label: '', script: '''curl -uadmin:admin1234 -T /home/maven/workspace/cicd/gameoflife-web/target/gameoflife.war http://35.164.244.170:8082/artifactory/new/gameoflife${BUILD_NUMBER}.war
-'''
+    withCredentials([usernamePassword(credentialsId: 'Jfrog', usernameVariable: 'dockerHubUser', passwordVariable: "dockerHubPassword")]) {
+      sh "curl -u${env.dockerHubUser}:${env.dockerHubPassword}    -T /home/maven/workspace/nightbuild-pipeline/gameoflife-web/target/gameoflife${BUILD_NUMBER}.war http://35.164.244.170:8082/artifactory/new/gameoflife${BUILD_NUMBER}.war"
+		}
+
 }
 }
 node('docker'){
@@ -28,7 +30,7 @@ node('docker'){
  }
  stage('push'){
     sh label: '', script: '''docker login -u abbanapurinaresh -p 9989435354
- docker tag cicd:1.0 abbanapurinaresh/k8s:cicd
+ docker tag cicd:1.0 abbanapurinaresh/k8s:${BUILD_NUMBER}
 docker push  abbanapurinaresh/k8s:cicd'''     
  }
 }
