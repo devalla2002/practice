@@ -15,7 +15,7 @@ stage('CodeQuality'){
 
 }
 stage('artifactory'){
-sh label: '', script: '''curl -uadmin:admin1234 -T /home/maven/workspace/cicd/gameoflife-web/target/gameoflife.war http://35.164.244.170:8082/artifactory/new/gameoflife.war
+sh label: '', script: '''curl -uadmin:admin1234 -T /home/maven/workspace/cicd/gameoflife-web/target/gameoflife.war http://35.164.244.170:8082/artifactory/new/gameoflife${BUILD_NUMBER}.war
 '''
 }
 }
@@ -24,7 +24,7 @@ node('docker'){
     git 'https://github.com/NareshAbbanapuri/practice.git'
 }
  stage('build-image') {
-     sh "docker image build --build-arg url=http://35.164.244.170:8082/artifactory/new/gameoflife.war -t cicd:1.0 ."
+     sh "docker image build --build-arg url=http://35.164.244.170:8082/artifactory/new/gameoflife${BUILD_NUMBER}.war -t cicd:1.0 ."
  }
  stage('push'){
     sh label: '', script: '''docker login -u abbanapurinaresh -p 9989435354
