@@ -15,7 +15,7 @@ stage('CodeQuality'){
 
 }
 stage('artifactory'){
-    withCredentials([usernamePassword(credentialsId: 'Jfrog', usernameVariable: 'dockerHubUser', passwordVariable: "dockerHubPassword")]) {
+    withCredentials([usernamePassword(credentialsId: 'jfrog', usernameVariable: 'dockerHubUser', passwordVariable: "dockerHubPassword")]) {
       sh "curl -u${env.dockerHubUser}:${env.dockerHubPassword}    -T /home/maven/workspace/nightbuild-pipeline/gameoflife-web/target/gameoflife${BUILD_NUMBER}.war http://35.164.244.170:8082/artifactory/new/gameoflife${BUILD_NUMBER}.war"
 		}
 
